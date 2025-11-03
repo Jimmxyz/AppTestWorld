@@ -13,6 +13,26 @@
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   </head>
   <body>
+    <style>
+      h1 { margin-bottom: 12px; }
+    table { border-collapse: collapse;margin: 0 auto; width: 50vw; box-shadow:0 2px 8px rgba(0,0,0,0.06); border-radius:8px; overflow:hidden; }
+    thead { background:#616161; color:#fff; }
+    th, td { padding: 10px 12px; text-align:left; border-bottom:1px solid #eee; font-size:14px; }
+    </style>
+    <h1>Tableau des scores</h1>
+
+  <table id="scoresTable" aria-label="Tableau de scores">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Mégapole</th>
+        <th>Pays</th>
+        <th>km</th>
+      </tr>
+    </thead>
+    <tbody id="tbody">
+    </tbody>
+  </table>
     <script>
         function back(){
             window.location.replace("../../");
@@ -37,9 +57,33 @@
     }
   ).addTo(map);
 }
+    function fill(){
+      score = JSON.parse(localStorage.getItem("SCORE"))
+      city = JSON.parse(localStorage.getItem("CITY"))
+      for(let i = 0; i < city.length; i++){
+        document.getElementById('tbody').innerHTML += '<tr id="tra'+i+'"></tr>'
+      }
+      for(let i = 0; i < city.length; i++){
+        document.getElementById('tra' + i).innerHTML = '<th id="tid'+i+'">'+(i+1)+'.</th>'+'<th>'+city[i].name+'</th>' + '<th>'+city[i].country+'</th>'+ '<th>'+score[i]+'</th>'
+      }
+      for(let i = 0; i < city.length; i++){
+        let color = ''
+        if(score[i] < 100){
+          color = '43a548'
+        }
+        else if(score[i] < 300){
+          color = 'f2651f'
+        }
+        else{
+          color = 'e23437'
+        }
+        document.getElementById('tid' + i).style.backgroundColor = '#' + color
+      }
+    }
+    fill()
     </script>
     <div id="info">
-      <h1>Désoler : les resultat ne sont pas disponible</h1>
+      <br><br>
       <button class="btn" onclick="back()">Revenir au menu principal</button>
     </div>
   </body>

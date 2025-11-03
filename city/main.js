@@ -85,6 +85,7 @@ function shuffle(list) {
   return arr;
 }
 listCity = shuffle(listCity);
+localStorage.setItem("CITY",JSON.stringify(listCity))
 
 
 //init
@@ -93,6 +94,7 @@ let marker;
 let posilat = 0;
 let posilng = 0;
 let playable = true
+let score = []
 document.getElementById("cityName").innerText = listCity[posilist].name;
 
 // When click
@@ -124,6 +126,7 @@ function test() {
     listCity[posilist].lat,
     listCity[posilist].lng
   );
+  score.push(Math.floor(dist))
   if (dist < 100) {
     revealGood();
   } else if(dist < 300){
@@ -134,6 +137,7 @@ function test() {
   }
   posilist++;
   if(posilist == listCity.length){
+    localStorage.setItem("SCORE",JSON.stringify(score))
     document.getElementById("cityName").innerText = "Terminer";
     document.getElementById("btnP").innerText = "Voir les resultat";
     document.getElementById("btnP").disabled = false;
