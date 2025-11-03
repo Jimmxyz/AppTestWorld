@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Momo+Trust+Display&display=swap" rel="stylesheet">
+    <title>Une idée pour le nom ?</title>
+</head>
+<body>
+    <script>
+        function tryIt(){
+            window.location.replace("./city/");
+        }
+        if (
+  window.matchMedia &&
+  window.matchMedia("(prefers-color-scheme: dark)").matches
+) {
+    document.body.style.backgroundColor = '#1a1a1aff'
+    document.body.style.color = "#ffffff"
+
+} else {
+        document.body.style.backgroundColor = '#ffffffff'
+        document.body.style.color = "#000000"
+}
+    </script>
+    <div id="menu">
+        <h1 style="margin-top: 21.44px;">Une idée pour le nom ?</h1>
+        <h4 style="margin-top: 21.44px;">Attention : app en beta</h4>
+
+        <button class="btn" onclick="tryIt()"><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -1150 960 960" width="24px" fill="#e3e3e3"><path d="m560-240-56-58 142-142H160v-80h486L504-662l56-58 240 240-240 240Z"/></svg>Essayer</button>
+        <p></p>
+        <br>
+        <h3 style="font-size: smaller;">Crer par <a href="https://github.com/Jimmxyz">@Jimmxyz</a></h3>
+    </div>
+</body>
+</html>

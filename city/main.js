@@ -1,0 +1,191 @@
+// Map init
+const map = L.map("map", { minZoom: 3, maxZoom: 8 }).setView(
+  [48.8566, 2.3522],
+  5
+); 
+
+// **********
+// *Map icon*
+// **********
+
+const redIcon = L.icon({
+  iconUrl:
+    "https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-red.png",
+  shadowUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png",
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+  shadowSize: [41, 41],
+});
+
+const greenIcon = L.icon({
+  iconUrl:
+    "https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-green.png",
+  shadowUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png",
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+  shadowSize: [41, 41],
+});
+
+const orangeIcon = L.icon({
+  iconUrl:
+    "https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-orange.png",
+  shadowUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png",
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+  shadowSize: [41, 41],
+});
+
+// ****************************
+// *Dark/Light mode + map load*
+// ****************************
+if (
+  window.matchMedia &&
+  window.matchMedia("(prefers-color-scheme: dark)").matches
+) {
+    document.getElementById('info').style.color = '#ffffff'
+    document.getElementById('map').style.backgroundColor = '#000000ff'
+    document.body.style.backgroundColor = '#1a1a1aff'
+
+  L.tileLayer(
+    "https://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}{r}.png",
+    {
+      attribution: "© OpenStreetMap, © CartoDB, Made by @Jimmxyz on github",
+      maxZoom: 18,
+      noWrap: true,
+    }
+  ).addTo(map);
+} else {
+        document.getElementById('info').style.color = '#000000ff'
+        document.getElementById('map').style.backgroundColor = '#ffffffff'
+        document.body.style.backgroundColor = '#ffffffff'
+
+  L.tileLayer(
+    "https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}.png",
+    {
+      attribution: "© OpenStreetMap, © CartoDB, Made by @Jimmxyz on github",
+      maxZoom: 18,
+      noWrap: true,
+    }
+  ).addTo(map);
+}
+
+// *******************
+// *random city order*
+// *******************
+
+function shuffle(list) {
+  const arr = [...list]; 
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+listCity = shuffle(listCity);
+
+
+//init
+let posilist = 0;
+let marker;
+let posilat = 0;
+let posilng = 0;
+let playable = true
+document.getElementById("cityName").innerText = listCity[posilist].name;
+
+// When click
+map.on("click", function (e) {
+  if(playable == false){
+    return
+  }
+  document.getElementById("btnP").disabled = false;
+  const { lat, lng } = e.latlng;
+  posilat = lat;
+  posilng = lng;
+  if (marker) {
+    marker.setLatLng(e.latlng);
+  } else {
+    marker = L.marker(e.latlng).addTo(map);
+  }
+  marker.addTo(map);
+  console.log("Posi selected :", lat, lng);
+});
+
+function test() {
+  if(playable == false){
+    window.location.replace("./result/");
+  }
+  document.getElementById("btnP").disabled = true;
+  dist = distKm(
+    posilat,
+    posilng,
+    listCity[posilist].lat,
+    listCity[posilist].lng
+  );
+  if (dist < 100) {
+    revealGood();
+  } else if(dist < 300){
+    revealSemiGood();
+  } 
+  else {
+    reveal();
+  }
+  posilist++;
+  if(posilist == listCity.length){
+    document.getElementById("cityName").innerText = "Terminer";
+    document.getElementById("btnP").innerText = "Voir les resultat";
+    document.getElementById("btnP").disabled = false;
+    playable = false
+    return
+  }
+  document.getElementById("cityName").innerText = listCity[posilist].name;
+}
+
+function revealGood() {
+  L.marker([listCity[posilist].lat, listCity[posilist].lng], {
+    icon: greenIcon,
+  })
+    .addTo(map)
+    .bindPopup(`<b>${listCity[posilist].name}</b>`)
+    .openPopup();
+  map.setView([listCity[posilist].lat, listCity[posilist].lng], 6);
+  map.removeLayer(marker);
+}
+
+function revealSemiGood() {
+  L.marker([listCity[posilist].lat, listCity[posilist].lng], {
+    icon: orangeIcon,
+  })
+    .addTo(map)
+    .bindPopup(`<b>${listCity[posilist].name}</b>`)
+    .openPopup();
+  map.setView([listCity[posilist].lat, listCity[posilist].lng], 6);
+  map.removeLayer(marker);
+}
+
+function reveal() {
+  L.marker([listCity[posilist].lat, listCity[posilist].lng], {
+    icon: redIcon,
+  })
+    .addTo(map)
+    .bindPopup(`<b>${listCity[posilist].name}</b>`)
+    .openPopup();
+  map.setView([listCity[posilist].lat, listCity[posilist].lng], 6);
+  map.removeLayer(marker);
+}
+
+function distKm(lat1, lon1, lat2, lon2) {
+  const R = 6371;
+  const dLat = ((lat2 - lat1) * Math.PI) / 180;
+  const dLon = ((lon2 - lon1) * Math.PI) / 180;
+  const a =
+    Math.sin(dLat / 2) ** 2 +
+    Math.cos((lat1 * Math.PI) / 180) *
+      Math.cos((lat2 * Math.PI) / 180) *
+      Math.sin(dLon / 2) ** 2;
+
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  return R * c;
+}

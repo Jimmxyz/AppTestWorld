@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../map.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Momo+Trust+Display&display=swap" rel="stylesheet">
+    <title>Une idée pour le nom ? Géo</title>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  </head>
+  <body>
+    <script>
+        function back(){
+            window.location.replace("/");
+        }
+        if (
+  window.matchMedia &&
+  window.matchMedia("(prefers-color-scheme: dark)").matches
+) {
+    document.body.style.color = '#ffffff'
+    document.body.style.backgroundColor = '#1a1a1aff'
+
+} else {
+        document.body.style.color = '#000000ff'
+        document.body.style.backgroundColor = '#ffffffff'
+
+  L.tileLayer(
+    "https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}.png",
+    {
+      attribution: "© OpenStreetMap, © CartoDB, Made by @Jimmxyz on github",
+      maxZoom: 18,
+      noWrap: true,
+    }
+  ).addTo(map);
+}
+    </script>
+    <div id="info">
+      <h1>Désoler : les resultat ne sont pas disponible</h1>
+      <button class="btn" onclick="back()">Revenir au menu principal</button>
+    </div>
+  </body>
+</html>
