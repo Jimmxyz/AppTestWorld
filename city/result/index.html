@@ -47,15 +47,6 @@
 } else {
         document.body.style.color = '#000000ff'
         document.body.style.backgroundColor = '#ffffffff'
-
-  L.tileLayer(
-    "https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}.png",
-    {
-      attribution: "© OpenStreetMap, © CartoDB, Made by @Jimmxyz on github",
-      maxZoom: 18,
-      noWrap: true,
-    }
-  ).addTo(map);
 }
     function fill(){
       score = JSON.parse(localStorage.getItem("SCORE"))

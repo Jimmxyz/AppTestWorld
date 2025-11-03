@@ -4,6 +4,7 @@ const map = L.map("map", { minZoom: 3, maxZoom: 8 }).setView(
   5
 ); 
 
+
 // **********
 // *Map icon*
 // **********
@@ -87,6 +88,12 @@ function shuffle(list) {
 listCity = shuffle(listCity);
 localStorage.setItem("CITY",JSON.stringify(listCity))
 
+if (!isNaN(listCity.length - 1) && (listCity.length - 1) > 0) {
+        document.getElementById('prgs').max = (listCity.length - 1);
+}
+if (!isNaN(0) && 0 >= 0 && 0 <= document.getElementById('prgs').max) {
+    document.getElementById('prgs').value = 0;
+}
 
 //init
 let posilist = 0;
@@ -119,6 +126,9 @@ function test() {
   if(playable == false){
     window.location.replace("./result/");
   }
+  if (!isNaN(posilist+1) && posilist+1 >= 0 && posilist+1 <= document.getElementById('prgs').max) {
+    document.getElementById('prgs').value = posilist + 1;
+}
   document.getElementById("btnP").disabled = true;
   dist = distKm(
     posilat,

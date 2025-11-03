@@ -54,3 +54,14 @@
     box-shadow: none;
     filter: grayscale(60%);
 }
+@media (prefers-color-scheme: light) {
+    progress {
+  accent-color: rgb(81, 81, 227);
+}
+}
+
+@media (prefers-color-scheme: dark) {
+    progress {
+  accent-color: rgb(44, 44, 150);
+}
+}
