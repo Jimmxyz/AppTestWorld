@@ -12,7 +12,7 @@ export const listCityDefault = [
     lat: 40.712776,
     lng: -74.005974,
   },
-  { name: "Mexico City", country: "Mexique", lat: 19.432608, lng: -99.133209 },
+  { name: "Mexico", country: "Mexique", lat: 19.432608, lng: -99.133209 },
   { name: "Bogotá", country: "Colombie", lat: 4.711, lng: -74.072092 },
   {
     name: "Rio de Janeiro",

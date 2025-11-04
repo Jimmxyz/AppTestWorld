@@ -91,7 +91,7 @@
 }
 .quizList{
     width: 100%;
-    height: 400px;
+    height: 480px;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -114,8 +114,8 @@
 }
 
 .card{
-    width: 220px;
-    height: 380px;
+    width: 240px;
+    height: 440px;
     border-radius: 10px;
     display: flex;         
   flex-direction: column;
