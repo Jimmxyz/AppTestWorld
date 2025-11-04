@@ -1,9 +1,13 @@
+import '../quiz/Megacity.js';
+import { listCityDefault } from '../quiz/Megacity.js';
 // Map init
 const map = L.map("map", { minZoom: 3, maxZoom: 8 }).setView(
   [48.8566, 2.3522],
   5
 ); 
 
+let dist;
+let listCity = listCityDefault;
 
 // **********
 // *Map icon*
@@ -122,9 +126,15 @@ map.on("click", function (e) {
   console.log("Posi selected :", lat, lng);
 });
 
+
+document.getElementById("btnP").addEventListener("click", () => {
+  test();
+});
+
+
 function test() {
   if(playable == false){
-    window.location.replace("./result/");
+    window.location.replace("../result/");
   }
   if (!isNaN(posilist+1) && posilist+1 >= 0 && posilist+1 <= document.getElementById('prgs').max) {
     document.getElementById('prgs').value = posilist + 1;

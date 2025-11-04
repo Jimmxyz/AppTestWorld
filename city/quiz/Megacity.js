@@ -1,5 +1,5 @@
 //important
-let listCity = [
+export const listCityDefault = [
   {
     name: "Los Angeles",
     country: "États-Unis d'Amérique",
