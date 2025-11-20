@@ -11,13 +11,31 @@
 <body>
     <script>
         function placeOnMap(jsonName){
-            window.location.replace(`./city/place/index.html?json=${jsonName}`);
+            const params = new URLSearchParams({
+                json: jsonName,
+                learningID: -1,
+                return: "/"
+            });
+            window.location.replace(`./city/place/index.html?${params.toString()}`);
         }
         function nameit(jsonName){
-            window.location.replace(`./city/name/index.html?json=${jsonName}`);
+            const params = new URLSearchParams({
+                json: jsonName,
+                learningID: -1,
+                return: "/"
+            });
+            window.location.replace(`./city/name/index.html?${params.toString()}`);
         }
         function guessIt(jsonName){
-            window.location.replace(`./city/guess/index.html?json=${jsonName}`);
+            const params = new URLSearchParams({
+                json: jsonName,
+                learningID: -1,
+                return: "/"
+            });
+            window.location.replace(`./city/guess/index.html?${params.toString()}`);
+        }
+        function learning(jsonName){
+            window.location.replace(`./learning_prgm/index.html?json=${jsonName}`);
         }
         if (
   window.matchMedia &&

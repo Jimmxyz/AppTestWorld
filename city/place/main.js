@@ -1,6 +1,10 @@
 const params = new URLSearchParams(window.location.search);
 const jsonName = params.get("json");
+const learningID = parseInt(params.get("learningID"));
+const returned = params.get("return")
 console.log(jsonName)
+console.log(learningID)
+console.log(returned)
 
 async function loadJSON() {
     try {
@@ -22,7 +26,14 @@ const map = L.map("map", { minZoom: 3, maxZoom: 8 }).setView(
 ); 
 
 let dist;
-let listCity = data.listCity;
+let listCity;
+if(learningID == -1){
+  listCity = data.listCity;
+}
+else{
+  listCity = data.listCity.filter(item => data.learning[learningID].listID.includes(item.name));
+  console.log(listCity)
+}
 
 // **********
 // *Map icon*
@@ -149,7 +160,12 @@ document.getElementById("btnP").addEventListener("click", () => {
 
 function test() {
   if(playable == false){
-    window.location.replace("../result/");
+    const params = new URLSearchParams({
+      return: returned,
+      learningID: learningID,
+      json: jsonName
+    });
+    window.location.replace(`../result/index.html?${params.toString()}`);
   }
   if (!isNaN(posilist+1) && posilist+1 >= 0 && posilist+1 <= document.getElementById('prgs').max) {
     document.getElementById('prgs').value = posilist + 1;

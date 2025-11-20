@@ -1,7 +1,8 @@
 const params = new URLSearchParams(window.location.search);
 const jsonName = params.get("json");
-console.log(jsonName)
-
+const learningID = parseInt(params.get("learningID"));
+const returned = params.get("return");
+const posi = parseInt(localStorage.getItem(jsonName + "_learn"))
 async function loadJSON() {
     try {
         const response = await fetch(`../quiz/${jsonName}`);
@@ -13,8 +14,19 @@ async function loadJSON() {
     }
 }
 
+let miss = 0
+let fail = 0
+let good = 0 
+
 const data = await loadJSON();
-let listCity = data.listCity;
+let listCity;
+if(learningID == -1){
+  listCity = data.listCity;
+}
+else{
+  listCity = data.listCity.filter(item => data.learning[learningID].listID.includes(item.name));
+  console.log(listCity)
+}
 let foundedCity = []
 
 // ****************************
@@ -39,8 +51,8 @@ if (
 
 localStorage.setItem("CITY",JSON.stringify(listCity))
 
-if (!isNaN(listCity.length - 1) && (listCity.length - 1) > 0) {
-        document.getElementById('prgs').max = (listCity.length - 1);
+if (!isNaN(listCity.length) && (listCity.length) > 0) {
+        document.getElementById('prgs').max = (listCity.length);
 }
 if (!isNaN(0) && 0 >= 0 && 0 <= document.getElementById('prgs').max) {
     document.getElementById('prgs').value = 0;
@@ -52,12 +64,22 @@ document.getElementById("back").disabled = false;
 let loseStrick = 0;
 
 function back() {
-  window.location.replace("../../");
+  const params = new URLSearchParams({
+      json: jsonName
+  });
+  window.location.replace(returned + "/index.html?" + params);
 }
+
 document.getElementById("back").addEventListener("click", () => {
   back();
 });
 
+document.getElementById("continue").addEventListener("click", () => {
+  if(miss / (fail + miss + good) < 0.1 && fail == 0 && posi == learningID){
+          localStorage.setItem(jsonName + "_learn",posi+1)
+  }
+  back();
+});
 
 document.getElementById('nameArea').addEventListener('blur', function() {
     textVerified()
@@ -88,6 +110,12 @@ function textVerified(){
         }
         document.getElementById('errorText').innerHTML = "Tu as trouvée : " + listCity[i].name
         document.getElementById('intArea').style.visibility = 'hidden'
+        if(loseStrick >=1){
+          miss++;
+        }
+        else{
+          good++
+        }
         lastInt = []
         indexInt++;
         loseStrick = 0;
@@ -97,7 +125,7 @@ function textVerified(){
         }
         if(document.getElementById('prgs').max == document.getElementById('prgs').value){
           document.getElementById('back').disabled = true;
-          document.getElementById('continue').disabled = true;
+          document.getElementById('continue').disabled = false;
         }
         return
       }
@@ -105,8 +133,27 @@ function textVerified(){
     document.getElementById('errorText').style.color = "rgb(241, 109, 109)"
     document.getElementById('errorText').innerHTML = "Nom invalide"
     loseStrick++;
-    if(loseStrick % 3 == 0){
+    if(loseStrick % 2 == 0 && loseStrick <= 6){
       intmaker();
+    }
+    else if(loseStrick >= 6){
+      console.log("(failed)\n" + intCityList[indexInt].name)
+      document.getElementById('errorText').style.color = "rgb(241, 109, 109)"
+      document.getElementById('errorText').innerHTML = "Tu n'as pas trouvée : " + intCityList[indexInt].name
+      document.getElementById('intArea').style.visibility = 'hidden'
+      fail++;
+      lastInt = []
+      indexInt++;
+      loseStrick = 0;
+      foundedCity.push(intCityList[indexInt].name);
+      if (!isNaN(foundedCity.length) && foundedCity.length >= 0 && foundedCity.length <= document.getElementById('prgs').max) {
+        document.getElementById('prgs').value = foundedCity.length;
+      }
+      if(document.getElementById('prgs').max == document.getElementById('prgs').value){
+        document.getElementById('back').disabled = true;
+        document.getElementById('continue').disabled = false;
+      }
+      return
     }
     return
 }
