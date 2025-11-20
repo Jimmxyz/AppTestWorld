@@ -2,6 +2,10 @@ const params = new URLSearchParams(window.location.search);
 const jsonName = params.get("json");
 console.log(jsonName)
 let progress = parseInt(localStorage.getItem(jsonName + "_learn")) ?? 0
+if(progress == NaN){
+    progress = 0
+    localStorage.setItem(jsonName + "_learn",progress)
+}
 localStorage.setItem(jsonName + "_learn",progress)
 
 async function loadJSON() {
