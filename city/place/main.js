@@ -89,7 +89,7 @@ if (
     }
   ).addTo(map);
 } else {
-        document.getElementById('info').style.color = '#000000ff'
+        document.getElementById('menu').style.color = '#000000ff'
         document.getElementById('map').style.backgroundColor = '#ffffffff'
         document.body.style.backgroundColor = '#ffffffff'
 
