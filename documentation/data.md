@@ -70,7 +70,11 @@ if you want one :
 >[!CAUTION]
 >Only wikipedia source is accepted (for now)
 
-### 3. Edit the type (WIP)
+### 3. Edit the type
+
+You have to add the type of activities which are supported :
+
+If you want to add a 'name it' add `` 
 
 
 ### 4. Add a list (WIP)
