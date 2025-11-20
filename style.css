@@ -103,10 +103,11 @@ body{
     overflow-x: auto;          
   white-space: nowrap;
     padding-left: 20px;
-    padding-right: 20px;
         scroll-behavior: smooth;
 }
-
+.card:last-child {
+  margin-right: 50px;
+}
 .title-icon {
   display: flex;              /* Aligne les éléments sur une même ligne */
   align-items: center;        /* Centre verticalement SVG + texte */
@@ -123,7 +124,7 @@ body{
 
 .card {
   height: 450px;
-  height: max;
+  min-width: 240px;
   text-overflow: ellipsis;
   white-space: nowrap;
   word-wrap: break-word;
@@ -134,8 +135,8 @@ body{
   align-items: center; 
   padding: 1%;
   border-radius: 10px;
-  background: #1a1a1a;
   gap: 20px; 
+  flex-shrink: 0;
 }
 
 /* IMAGE A GAUCHE */
@@ -148,6 +149,12 @@ body{
   white-space: nowrap;
   word-wrap: break-word;
   overflow: hidden;
+}
+
+@media (max-width: 768px) {
+  .cardImage {
+    display: none;
+  }
 }
 
 /* CONTENU A DROITE */
