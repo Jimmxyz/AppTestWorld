@@ -1,3 +1,5 @@
+import "https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+
 export function shuffle(list) {
   const arr = [...list]; 
   for (let i = arr.length - 1; i > 0; i--) {
